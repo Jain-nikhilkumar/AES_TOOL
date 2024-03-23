@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KSPD SAFE</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #000; /* Background color set to black */
+            color: #0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            height: 80%;
+            width: 80%;
+            padding: 20px;
+            border: 2px solid #0f0;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        h1 {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="file"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #0f0;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 0, 0.2);
+            color: #0f0;
+            font-size: 18px;
+            {% comment %} transition : background-color 0.3s ease; {% endcomment %}
+            font-family: 'Courier New', Courier, monospace;
+        }
+        input[type="file"]::-webkit-file-upload-button {
+            background-color: black;
+            color: #0f0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"] {
+            width: 50%;
+            padding: 15px;
+            margin-top: 10px;
+            border: 2px solid #0f0;
+            margin-bottom: 2px;
+            border-radius: 5px;
+            background-color: rgba(0, 255, 0, 0.2);
+            color: #0f0;
+            font-size: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover {
+            background-color: rgba(0, 255, 0, 0.5);
+        }
+    </style>
+    <script>
+        function validateKeyLength() {
+            var key = document.getElementById('key').value;
+            if (key.length !== 16 && key.length !== 24 && key.length !== 32) {
+                alert('The key must be 16, 24, or 32 bytes long.');
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>CSV Encryption and Decryption</h1>
+        <form action="/" method="post" enctype="multipart/form-data" onsubmit="return validateKeyLength()">
+            <label for="key">Enter Safe Key:</label>
+            <input type="text" id="key" name="key" required>
+            <br><br>
+            <label for="file">Choose A Dataset File:</label>
+            <input type="file" id="file" name="file" accept=".csv" required>
+            <br><br>
+            <input type="submit" name="action" value="encrypt">
+            <input type="submit" name="action" value="decrypt">
+        </form>
+    </div>
+</body>
+</html>
