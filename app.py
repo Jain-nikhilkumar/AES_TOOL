@@ -33,7 +33,7 @@ def encrypt_dataframe(df, key):
     encrypted_columns = {}
     
     # Define keywords to identify personal information columns
-    personal_info_keywords = ['name', 'address', 'phone', 'email', 'cast']
+    personal_info_keywords = ['name', 'address', 'phone', 'email', 'cast','dob','age','sex','profession']
     
     # Identify columns containing personal information
     for column in df.columns:
@@ -86,7 +86,7 @@ def index():
     global SECRET_KEY
 
     if request.method == 'POST':
-        if request.form['action'] == 'encrypt':
+        if request.form['action'] == 'Encrypt':
             key = request.form['key']
             SECRET_KEY = bytes(key, 'utf-8')
             file = request.files['file']
@@ -95,7 +95,7 @@ def index():
             df.to_csv('encrypted.csv', index=False)
             return render_template('encrypted.html')
         
-        elif request.form['action'] == 'decrypt':
+        elif request.form['action'] == 'Decrypt':
             key = request.form['key']
             SECRET_KEY = bytes(key, 'utf-8')
             file = request.files['file']
@@ -108,15 +108,16 @@ def index():
                 return render_template('wrongkey.html') 
     return render_template('index.html')
 
-@app.route('/download/encrypted')
+@app.route('/')
 def download_encrypted():
-    encrypted_file_path = 'integration/encrypted.csv'  # Specify the file path where the encrypted CSV is saved
+    encrypted_file_path = r'E:\NIKHIL\ML'  # Specify the full file path including the file name
     return send_file(encrypted_file_path, as_attachment=True)
 
 @app.route('/download/decrypted')
 def download_decrypted():
-    decrypted_file_path = 'C:/Users/Admin/Downloads/decrypted.csv'  # Full path to the decrypted CSV file
+    decrypted_file_path = r'E:\NIKHIL\ML\download\decrypted.csv'  # Specify the full file path including the file name
     return send_file(decrypted_file_path, as_attachment=True)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
